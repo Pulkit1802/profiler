@@ -1,4 +1,5 @@
 import winston from 'winston';
+import config from './config';
 
 const logger = winston.createLogger({
 levels: {
@@ -13,7 +14,7 @@ silly: 6,
 
 transports: [
     new winston.transports.Console({
-        level: 'debug',
+        level: config.nodeEnv === 'development' ? 'debug' : 'info',
         format: winston.format.combine(
         winston.format.colorize({
             level: true,
@@ -24,7 +25,7 @@ transports: [
 
     new winston.transports.File({
         filename: './logs/error.log',
-        level: 'info',
+        level: 'error',
         format: winston.format.combine(
         winston.format.timestamp(),
         winston.format.json()

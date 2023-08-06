@@ -7,11 +7,10 @@ process.on('uncaughtException', (error) => {
 
 import app from "app";
 import logger from "utils/logger";
+import config from "utils/config";
 
-const port = process.env.PORT || 5000;
-
-app.listen(port, () => {
-    logger.info(`🟢 Server Started at port ${port}`);
+app.listen(config.port, () => {
+    logger.info(`🟢 Server Started at port ${config.port}`);
 });
 
 process.on('unhandledRejection', (error: Error) => {

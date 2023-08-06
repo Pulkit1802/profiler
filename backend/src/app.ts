@@ -2,6 +2,7 @@ import express, { Application } from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import logger from 'utils/logger';
+import config from 'utils/config';
 
 const app : Application = express();
 
@@ -11,7 +12,10 @@ const corsOptions = {
     allowedHeaders: ['Content-Type', 'Authorization']
 }
 
-app.use(morgan('dev'));
+if (config.nodeEnv === 'development')
+    app.use(morgan('dev'));
+else
+    app.use(morgan('prod'));
 
 app.get('/api/healthCheck', (req, res) => {
     try {
