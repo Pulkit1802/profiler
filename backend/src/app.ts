@@ -3,6 +3,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 import logger from 'utils/logger';
 import config from 'utils/config';
+import router from 'routes';
 
 const app : Application = express();
 
@@ -35,5 +36,7 @@ app.get('/api/healthCheck', (req, res) => {
 
 app.use(cors(corsOptions));
 app.use(express.json());
+
+app.use('/api', router);
 
 export default app;

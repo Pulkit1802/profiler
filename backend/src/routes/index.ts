@@ -1,4 +1,5 @@
 import { Router } from "express";
+import userRouter from './user.route';
 
 type routeType = {
     path: string,
@@ -6,6 +7,7 @@ type routeType = {
 }
 
 const routes: routeType[] = [
+    {path: '/user', route: userRouter}
 ];
 
 const router = Router();
