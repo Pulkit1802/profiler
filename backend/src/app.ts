@@ -4,6 +4,7 @@ import cors from 'cors';
 import logger from './utils/logger';
 import config from './utils/config';
 import router from './routes';
+import errorHandler from './middleware/errorHandler';
 
 const app : Application = express();
 
@@ -38,5 +39,6 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 app.use('/api', router);
+app.use(errorHandler);
 
 export default app;
