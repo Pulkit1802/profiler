@@ -9,3 +9,68 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model user {
+  userId    String    @id
+  name      String
+  email     String    @unique
+  password  String
+  phone     String    @unique
+  cvUrl     String
+  application application[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+
+model hr {
+  hrId      String    @id
+  name      String
+  email     String    @unique
+  password  String
+  phone     String    @unique
+  job       job[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+
+model job {
+  jobId     String    @id
+  title     String
+  description String
+  salary    String
+  location  String
+  hrId      String
+  hr        hr       @relation(fields: [hrId], references: [hrId])
+  applicants application[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+
+model application {
+  applicationId String @id
+  userId        String
+  user          user   @relation(fields: [userId], references: [userId])
+  jobId         String
+  job           job    @relation(fields: [jobId], references: [jobId])
+  status        String
+  questions     questions[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  @@unique([userId, jobId])
+}
+
+
+model questions {
+  questionsId String @id
+  applicationId String
+  application application @relation(fields: [applicationId], references: [applicationId])
+  question String
+  status Boolean @default(false)
+  answer String @default("")
+  answeredAt DateTime
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
