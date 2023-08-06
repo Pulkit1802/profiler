@@ -22,16 +22,6 @@ export const getTableDataById = async (model: string, id: string, select?:any) =
     });
 }
 
-export const getTableDataByIdWithInclude = async (model: string, id: string, include: any, select?:any) => {
-    return config.prisma[model].findUnique({
-        where: {
-            id: id
-        },
-        select: select,
-        include: include
-    });
-}
-
 export const updateTableDataById = async (model: string, id: string, data: any, select?:any) => {
     return config.prisma[model].update({
         where: {
@@ -57,26 +47,10 @@ export const getTableByWhereFields = async (model: string, where: any, select?:a
     });
 }
 
-export const getTableByWhereFieldsWithInclude = async (model: string, where: any, include: any, select?:any) => {
-    return config.prisma[model].findMany({
-        where: where,
-        select: select,
-        include: include
-    });
-}
-
 export const getFirstTableByWhereFields = async (model: string, where: any, select?:any) => {
     return config.prisma[model].findFirst({
         where: where,
         select: select
-    });
-}
-
-export const getFirstTableByWhereFieldsWithInclude = async (model: string, where: any, include: any, select?:any) => {
-    return config.prisma[model].findFirst({
-        where: where,
-        select: select,
-        include: include
     });
 }
 

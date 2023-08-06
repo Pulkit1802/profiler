@@ -16,7 +16,8 @@ const authenticate = (req: Request, res: Response, next: NextFunction) => {
             });
         }
 
-        const decoded = jwt.verify(token, config.jwtToken);
+        // @ts-ignore
+        req.user = jwt.verify(token, config.jwtToken);
 
         next();
 
