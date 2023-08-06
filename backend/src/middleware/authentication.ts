@@ -1,33 +1,29 @@
 const jwt = require('jsonwebtoken');
 import { NextFunction, Request, Response } from "express";
 import logger from "../utils/logger";
-import config from "utils/config";
-import AppError from "utils/AppError";
+import config from "../utils/config";
+import AppError from "../utils/AppError";
 
-const authenticate = (req: Request, res: Response, next: NextFunction) => {
+const authenticate = async (req: Request, res: Response, next: NextFunction) => {
 
     try {
 
-        const token = req.header('Authorization');
+        let token = req.header('Authorization');
 
         if(! token) {  
-            return res.status(401).send({
-                status: 'fail',
-                message: 'Unauthorized'
-            });
+            next(new AppError('Jwt Token Missing', 401));
         }
 
-        // @ts-ignore
-        req.user = jwt.verify(token, config.jwtToken);
+        token = token?.split(' ')[1];
 
-        next(new AppError('Unauthorized', 401));
+        // @ts-ignore
+        req.user = await jwt.verify(token, config.jwtToken);
+
+        next();
 
     } catch (error) {
         logger.error(error);
-        res.status(401).send({
-            status: 'fail',
-            message: 'Unauthorized'
-        });
+        next(new AppError('Unauthorized', 401));
     }
 
 };

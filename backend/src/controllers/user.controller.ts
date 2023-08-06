@@ -24,6 +24,20 @@ const newUser = catchAsync(async (req: Request, res: Response, next: NextFunctio
 });
 
 
+const getUser = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    // @ts-ignore
+    const userId = req.user.id;
+
+    const user = await userService.getUser(userId);
+
+    res.status(200).json({
+        'success': true,
+        'msg': 'User found',
+        'data': user
+    });
+
+});
+
 const getAllUsers = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const allUsers = await userService.getAllUsers();
 
@@ -51,5 +65,6 @@ const loginUser = catchAsync(async (req: Request, res: Response, next: NextFunct
 export default {
     newUser,
     getAllUsers,
-    loginUser
+    loginUser,
+    getUser
 }

@@ -11,7 +11,7 @@ datasource db {
 }
 
 model user {
-  userId    String    @id
+  id    String    @id
   name      String
   email     String    @unique
   password  String
@@ -24,7 +24,7 @@ model user {
 
 
 model hr {
-  hrId      String    @id
+  id      String    @id
   name      String
   email     String    @unique
   password  String
@@ -36,13 +36,13 @@ model hr {
 
 
 model job {
-  jobId     String    @id
+  id     String    @id
   title     String
   description String
   salary    String
   location  String
   hrId      String
-  hr        hr       @relation(fields: [hrId], references: [hrId])
+  hr        hr       @relation(fields: [hrId], references: [id])
   applicants application[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
@@ -50,11 +50,11 @@ model job {
 
 
 model application {
-  applicationId String @id
+  id            String      @id
   userId        String
-  user          user   @relation(fields: [userId], references: [userId])
+  user          user   @relation(fields: [userId], references: [id])
   jobId         String
-  job           job    @relation(fields: [jobId], references: [jobId])
+  job           job    @relation(fields: [jobId], references: [id])
   status        String
   questions     questions[]
   createdAt     DateTime  @default(now())
@@ -64,9 +64,9 @@ model application {
 
 
 model questions {
-  questionsId String @id
+  id String @id
   applicationId String
-  application application @relation(fields: [applicationId], references: [applicationId])
+  application application @relation(fields: [applicationId], references: [id])
   question String
   status Boolean @default(false)
   answer String @default("")
