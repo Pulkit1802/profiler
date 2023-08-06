@@ -6,21 +6,23 @@ process.on('uncaughtException', (error) => {
 });   
 
 import app from "app";
+import logger from "utils/logger";
 
-app.listen(5000, () => {
-    console.log('🟢 Server Started!');
-    console.log('🟢 Listening on port 5000!');
+const port = process.env.PORT || 5000;
+
+app.listen(port, () => {
+    logger.info(`🟢 Server Started at port ${port}`);
 });
 
 process.on('unhandledRejection', (error: Error) => {
-    console.log('🔴 UNHANDLED REJECTION!');
-    console.info(error);
+    logger.error('🔴 UNHANDLED REJECTION!');
+    logger.error(error);
     console.info('⚠ Server Closed!');
     process.exit(1);
 });
 
 process.on('SIGTERM', () => {
-    console.log('🟢 SIGTERM RECEIVED!');
-    console.log('🟢 Server Closed!');
+    console.info('🟢 SIGTERM RECEIVED!');
+    console.info('🟢 Server Closed!');
     process.exit(1);
 });

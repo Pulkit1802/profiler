@@ -1,6 +1,7 @@
 import express, { Application } from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
+import logger from 'utils/logger';
 
 const app : Application = express();
 
@@ -23,6 +24,7 @@ app.get('/api/healthCheck', (req, res) => {
         res.status(200).json(healthCheck);
 
     } catch (error) {
+        logger.error('🔴 Error on health check \n Error:', error );
         res.status(500).json({ message: 'Internal server error' });
     }
 });
