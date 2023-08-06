@@ -4,51 +4,51 @@ import { nanoid } from "nanoid";
 import bcrypt from 'bcrypt';
 import AppError from "../utils/AppError";
 
-const loginUser = async (email: string, password: string) => {
-    const user = await getFirstTableByWhereFields('user', {
+const loginhr = async (email: string, password: string) => {
+    const hr = await getFirstTableByWhereFields('hr', {
         email: email,
     }, {id: true, email: true, name: true, password: true});
 
-    if (user === null) {
-        throw new AppError('User not found', 404);
+    if (hr === null) {
+        throw new AppError('hr not found', 404);
     }
 
-    const checkPassword = await bcrypt.compare(password, user.password);
+    const checkPassword = await bcrypt.compare(password, hr.password);
 
     if (!checkPassword) {
-        throw new AppError('User or Password Incorrect', 401);
+        throw new AppError('hr or Password Incorrect', 401);
     }
 
-    delete user['password'];
-    user['role'] = 'user';
+    delete hr['password'];
+    hr['role'] = 'hr';
 
-    return user;
+    return hr;
 
 }
 
-const createNewUser = async (data: any) => {
+const createNewhr = async (data: any) => {
 
     data.id = nanoid(15);
 
     try {
-        return await createTable('user', data, {
+        return await createTable('hr', data, {
             id: true, 
             email: true, 
             name: true
         });
-
+        
     } catch (error) {
         if (error instanceof PrismaClientKnownRequestError && error.code === 'P2002')
-            throw new AppError('User already exists', 409);
+            throw new AppError('hr already exists', 409);
 
-        throw new AppError('Error creating user', 500);
+        throw new AppError('Error creating hr', 500);
 
     }
 
 }
 
-const getUser = async (userId: string) => {
-    return await getTableDataById('user', userId, {
+const gethr = async (hrId: string) => {
+    return await getTableDataById('hr', hrId, {
         id: true,
         email: true,
         name: true,
@@ -56,8 +56,8 @@ const getUser = async (userId: string) => {
     });
 }
 
-const getAllUsers = async () => {
-    return await getEntireTable('user', {
+const getAllhrs = async () => {
+    return await getEntireTable('hr', {
         id: true,
         email: true,
         name: true,
@@ -66,8 +66,8 @@ const getAllUsers = async () => {
 }
 
 export default {
-    createNewUser,
-    getAllUsers,
-    getUser,
-    loginUser
+    createNewhr,
+    getAllhrs,
+    gethr,
+    loginhr
 }

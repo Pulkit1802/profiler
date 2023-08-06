@@ -1,5 +1,6 @@
 import { Router } from "express";
 import userRouter from './user.route';
+import hrRouter from './hr.route';
 
 type routeType = {
     path: string,
@@ -7,7 +8,8 @@ type routeType = {
 }
 
 const routes: routeType[] = [
-    {path: '/user', route: userRouter}
+    {path: '/user', route: userRouter},
+    {path: '/hr', route: hrRouter}
 ];
 
 const router = Router();

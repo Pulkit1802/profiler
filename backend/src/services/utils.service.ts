@@ -1,4 +1,5 @@
 import config from "../utils/config";
+import AppError from "utils/AppError";
 
 export const createTable = async (model: string, data: any, select?:any) => {
     // @ts-ignore
@@ -17,13 +18,20 @@ export const getEntireTable = async (model: string, select?:any) => {
 
 export const getTableDataById = async (model: string, id: string, select?:any) => {
     // @ts-ignore
-
-    return config.prisma[model].findUnique({
+    let entry = await config.prisma[model].findUnique({
         where: {
             id: id
         },
         select: select
     });
+
+    if (entry === null) {
+        throw new AppError(`${model} not found`, 404);
+    }
+
+    return entry;
+
+    
 }
 
 export const updateTableDataById = async (model: string, id: string, data: any, select?:any) => {
