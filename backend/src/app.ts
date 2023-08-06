@@ -1,9 +1,9 @@
 import express, { Application } from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
-import logger from 'utils/logger';
-import config from 'utils/config';
-import router from 'routes';
+import logger from './utils/logger';
+import config from './utils/config';
+import router from './routes';
 
 const app : Application = express();
 

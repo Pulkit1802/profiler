@@ -1,4 +1,4 @@
-import config from "utils/config";
+import config from "../utils/config";
 
 export const createTable = async (model: string, data: any, select?:any) => {
     return config.prisma[model].create({

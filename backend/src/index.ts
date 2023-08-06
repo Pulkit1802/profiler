@@ -5,9 +5,9 @@ process.on('uncaughtException', (error) => {
     process.exit(1);
 });   
 
-import app from "app";
-import logger from "utils/logger";
-import config from "utils/config";
+import app from "./app";
+import logger from "./utils/logger";
+import config from "./utils/config";
 
 app.listen(config.port, () => {
     logger.info(`🟢 Server Started at port ${config.port}`);
