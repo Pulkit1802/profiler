@@ -1,4 +1,4 @@
-import { createTable, getEntireTable, getTableDataById, getTableByWhereFields, getFirstTableByWhereFields } from "./utils.service";
+import { createTable, getEntireTable, getTableDataById, getFirstTableByWhereFields } from "./utils.service";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { nanoid } from "nanoid";
 import bcrypt from 'bcrypt';
@@ -10,13 +10,13 @@ const loginUser = async (email: string, password: string) => {
     }, {id: true, email: true, name: true, password: true});
 
     if (user === null) {
-        throw new AppError('User not found', 404);
+        throw new AppError('Incorrect email or password', 404);
     }
 
     const checkPassword = await bcrypt.compare(password, user.password);
 
     if (!checkPassword) {
-        throw new AppError('User or Password Incorrect', 401);
+        throw new AppError('Incorrect email or password', 401);
     }
 
     delete user['password'];
