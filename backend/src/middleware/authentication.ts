@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 import { NextFunction, Request, Response } from "express";
 import logger from "../utils/logger";
 import config from "utils/config";
+import AppError from "utils/AppError";
 
 const authenticate = (req: Request, res: Response, next: NextFunction) => {
 
@@ -19,7 +20,7 @@ const authenticate = (req: Request, res: Response, next: NextFunction) => {
         // @ts-ignore
         req.user = jwt.verify(token, config.jwtToken);
 
-        next();
+        next(new AppError('Unauthorized', 401));
 
     } catch (error) {
         logger.error(error);

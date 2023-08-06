@@ -8,7 +8,6 @@ const errorHandler = (
     next: NextFunction
     ) => {
     err.code = err.code || 500;
-    err.success = err.success;
 
     if (process.env.NODE_ENV === 'development') {
         logger.error(`message: ${err.message}, \n ${err.stack}`);
@@ -19,7 +18,7 @@ const errorHandler = (
     console.log(err.message);
 
     res.status(err.code).json({
-        success: err.success,
+        success: false,
         message: err.message
     })
 };
