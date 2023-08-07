@@ -1,5 +1,6 @@
 import { createTable, getEntireTable, getTableDataById, getFirstTableByWhereFields } from "./utils.service";
 import { nanoid } from "nanoid";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import AppError from "../utils/AppError";
 
 const createNewjob = async (data: any) => {
@@ -16,6 +17,10 @@ const createNewjob = async (data: any) => {
         });
 
     } catch (error) {
+        
+        if (error instanceof PrismaClientKnownRequestError && error.code === 'P2002')
+            throw new AppError('job already exists', 409);
+
         throw new AppError('Error creating job', 500);
     }
 
