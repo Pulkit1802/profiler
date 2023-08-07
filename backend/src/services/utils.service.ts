@@ -1,5 +1,5 @@
 import config from "../utils/config";
-import AppError from "utils/AppError";
+import AppError from "../utils/AppError";
 
 export const createTable = async (model: string, data: any, select?:any) => {
     // @ts-ignore

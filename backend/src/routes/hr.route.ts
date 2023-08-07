@@ -1,5 +1,5 @@
 import { Router } from "express";
-import hrController from "controllers/hr.controller";
+import hrController from "../controllers/hr.controller";
 import authenticate from "../middleware/authentication";
 
 const router = Router();
